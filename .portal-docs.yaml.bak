@@ -1,0 +1,62 @@
+version: 1
+
+team:
+  id: "CESTI666"
+  name: "Analistas de suporte sem plataforma"
+  contacts:
+    - "email:suporte.plataforma.xxx@caixa.gov.br"
+
+ownership:
+  repo_type: "team-docs"      # team-docs | project-docs | shared-docs
+  visibility: "internal"      # internal | restricted | public
+  criticality: "high"         # low | medium | high
+
+content:
+  rules:
+    - kind: "runbook"
+      include:
+        - "**/runbooks/**/*.md"
+        - "**/procedimentos/**/*.md"
+        - "**/*runbook*.md"
+      exclude:
+        - "**/draft/**"
+
+    - kind: "procedure"
+      include:
+        - "**/procedures/**/*.md"
+        - "**/operations/**/*.md"
+        - "**/playbooks/**/*.md"
+
+    - kind: "internal-doc"
+      include:
+        - "**/team/**/*.md"
+        - "**/equipes/**/*.md"
+        - "**/docs-internos/**/*.md"
+        - "**/overview/**/*.md"
+
+    - kind: "script"
+      include:
+        - "**/scripts/**/*.md"
+        - "**/*script*.md"
+
+metadata_defaults:
+  team_id: "SUP-PLAT-ALTA"
+  service: "plataforma-alta"
+  environment: "prod"
+  owner: "time-suporte-plataforma-alta"
+
+labels:
+  domain: "suporte"
+  product: "plataforma-alta"
+  compliance: "interno"
+
+integrations:
+  rh:
+    enabled: true
+    source: "api-rh-corporativa"
+    team_lookup_key: "SUP-PLAT-ALTA"
+
+publishing:
+  enabled: true
+  include_repo_readme: true
+  include_root_docs: true

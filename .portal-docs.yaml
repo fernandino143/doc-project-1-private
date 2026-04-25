@@ -1,32 +1,46 @@
+# Versao do schema do manifesto. Use "1" para o formato atual.
 version: 1
 
+# Dados de identificacao da equipe dona deste repositorio.
 team:
+  # Identificador unico da equipe (ideal para integrar com RH/API).
   id: "CESTI666"
+  # Nome amigavel que sera exibido no portal.
   name: "Analistas de suporte sem plataforma"
+  # Lista de contatos da equipe (email, slack, telefone, etc).
   contacts:
     - "email:suporte.plataforma.xxx@caixa.gov.br"
 
+# Metadados de governanca do repositorio.
 ownership:
-  repo_type: "team-docs"      # team-docs | project-docs | shared-docs
-  visibility: "internal"      # internal | restricted | public
-  criticality: "high"         # low | medium | high
+  # Tipo de repositorio: team-docs (equipe), project-docs (projeto), shared-docs (compartilhado).
+  repo_type: "team-docs"
+  # Nivel de visibilidade do conteudo.
+  visibility: "internal"
+  # Criticidade operacional do repositorio.
+  criticality: "high"
 
+# Regras de classificacao de conteudo para o portal.
 content:
   rules:
+    # Tudo que casar com os patterns abaixo sera classificado como runbook.
     - kind: "runbook"
       include:
         - "**/runbooks/**/*.md"
         - "**/procedimentos/**/*.md"
         - "**/*runbook*.md"
+      # Paths excluidos mesmo que batam em include.
       exclude:
         - "**/draft/**"
 
+    # Regras para classificar documentos como procedimento.
     - kind: "procedure"
       include:
         - "**/procedures/**/*.md"
         - "**/operations/**/*.md"
         - "**/playbooks/**/*.md"
 
+    # Regras para documentacao interna da equipe.
     - kind: "internal-doc"
       include:
         - "**/team/**/*.md"
@@ -34,29 +48,47 @@ content:
         - "**/docs-internos/**/*.md"
         - "**/overview/**/*.md"
 
+    # Regras para itens de scripts documentados em markdown.
     - kind: "script"
       include:
         - "**/scripts/**/*.md"
         - "**/*script*.md"
 
+# Valores default usados quando o arquivo markdown nao informa front matter.
 metadata_defaults:
+  # Team ID padrao aplicado aos documentos sem team_id explicito.
   team_id: "SUP-PLAT-ALTA"
+  # Servico padrao para enriquecimento de catalogo.
   service: "plataforma-alta"
+  # Ambiente padrao (ex.: dev, hml, prod).
   environment: "prod"
+  # Owner padrao para rastreabilidade.
   owner: "time-suporte-plataforma-alta"
 
+# Labels livres para taxonomia e filtros futuros.
 labels:
+  # Dominio funcional principal.
   domain: "suporte"
+  # Produto ou plataforma associada.
   product: "plataforma-alta"
+  # Contexto de compliance/classificacao interna.
   compliance: "interno"
 
+# Integracoes externas opcionais.
 integrations:
   rh:
+    # Habilita enriquecimento com dados de RH.
     enabled: true
+    # Nome/identificador da fonte de RH.
     source: "api-rh-corporativa"
-    team_lookup_key: "SUP-PLAT-ALTA"
+    # Chave usada para localizar a equipe na fonte de RH.
+    team_lookup_key: "CESTI666"
 
+# Controle de publicacao no portal.
 publishing:
+  # Se false, este manifesto pode ser ignorado pelo pipeline de publicacao.
   enabled: true
+  # Inclui README da raiz no catalogo quando true.
   include_repo_readme: true
+  # Inclui markdown da raiz (fora de subpastas) quando true.
   include_root_docs: true
